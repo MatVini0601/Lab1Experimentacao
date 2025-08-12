@@ -1,0 +1,6 @@
+RQ,min,max,media,mediana
+RQ01 - Idade do repositório (dias),203,5826,3098.36,3258.0
+RQ02 - Pull requests aceitas,0,65371,6731.82,1792.5
+RQ03 - Total releases,0,1000,141.05,15.5
+RQ04 - Dias desde última atualização,0,0,0,0.0
+RQ06 - % Issues fechadas,0,100.0,76.31,89.53
