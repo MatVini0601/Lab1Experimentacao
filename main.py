@@ -11,7 +11,7 @@ RESUMO_FILE = "estatisticas_resumo.csv"
 # === QUERY GRAPHQL ===
 query = """
 query($cursor: String) {
-  search(query: "stars:>0 sort:stars-desc", type: REPOSITORY, first: 10, after: $cursor) {
+  search(query: "stars:>0 sort:stars-desc", type: REPOSITORY, first: 25, after: $cursor) {
     pageInfo {
       endCursor
       hasNextPage
@@ -63,7 +63,7 @@ def main():
     cursor = None
     total_fetched = 0
 
-    while total_fetched < 100:
+    while total_fetched < 1000:
         data = run_query({"cursor": cursor})
         search_data = data["data"]["search"]
         
