@@ -10,7 +10,9 @@
       in {
         devShell = pkgs.mkShell {
           buildInputs = with pkgs;
-            [ (python3.withPackages (ps: [ ps.requests ])) ];
+            [
+              (python3.withPackages (ps: [ ps.requests ps.pandas ps.plotlib ]))
+            ];
         };
       });
 }
