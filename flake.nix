@@ -11,7 +11,8 @@
         devShell = pkgs.mkShell {
           buildInputs = with pkgs;
             [
-              (python3.withPackages (ps: [ ps.requests ps.pandas ps.plotlib ]))
+              (python3.withPackages
+                (ps: [ ps.requests ps.pandas ps.matplotlib ps.seaborn ]))
             ];
         };
       });
