@@ -78,31 +78,33 @@ def grafico_barras(df):
 
 # GRÁFICOS AVANÇADOS
 
-# def grafico_dispersao(df):
-#     plt.figure(figsize=(8, 5))
-#     sns.scatterplot(x='Vendas', y='Lucro', hue='Produto', data=df)
-#     plt.title('Vendas vs Lucro por Produto')
-#     plt.tight_layout()
-#     salvar_grafico("grafico_dispersao")
+def grafico_dispersao(df):
+    plt.figure(figsize=(8, 5))
+    df['estrelas_milhares'] = df['stars'] / 1000
+    sns.scatterplot(x='estrelas_milhares', y='idade_dias', hue='stars', data=df)
+    plt.title('Estrelas vs Idade dos Repositórios')
+    plt.tight_layout()
+    salvar_grafico("grafico_dispersao")
 #     # plt.show()
 
 
 def grafico_boxplot(df):
     # Pull request por linguagem
-    top_languages = df['primary_language'].value_counts().head(5).index
+    top_repos = df['stars'].head(5)
 
-    df["pulls_milhares"] = df["pull_requests_aceitas"] / 1000
-    
+    df["pulls_centenas"] = df["pull_requests_aceitas"] / 100
+    df['pulls_intervalo'] = pd.cut(df["pulls_centenas"], bins=[0, 100, 200, 300, 400, 500], right=False)
+
     plt.figure(figsize=(12, 8))
     sns.boxplot(
-        x="primary_language", 
-        y="pulls_milhares",
-        data=df[df["primary_language"].isin(top_languages)]
+        x="pulls_intervalo", 
+        y="stars",
+        data=df[df["stars"].isin(top_repos)]
     )
     
-    plt.title("Distribuição de Pull Requests Aceitas por Linguagem")
-    plt.xlabel("Linguagem")
-    plt.ylabel("Pull Requests Aceitas (milhares)")
+    plt.title("Distribuição de Pull Requests Aceitas")
+    plt.xlabel("Intervalo de pulls(Centenas)")
+    plt.ylabel("Estrelas")
     plt.xticks(rotation=45)
     plt.tight_layout()
     salvar_grafico("grafico_boxplot")
@@ -123,8 +125,9 @@ def grafico_boxplot(df):
 
 
 # def grafico_pairplot(df):
-#     sns.pairplot(df[['Vendas', 'Lucro']], kind='reg')
-#     plt.suptitle('Correlação entre Vendas e Lucro', y=1.02)
+#     df['estrelas_milhares'] = df['stars'] / 1000
+#     sns.pairplot(df[['estrelas_milhares', 'dias_desde_ultima_atualizacao']], kind='scatter')
+#     plt.suptitle('Correlação entre Stars e Dias desde a Última Atualização', y=1.02)
 #     salvar_grafico("grafico_pairplot")
 #     # plt.show()
 
@@ -164,10 +167,10 @@ def main():
     # grafico_histograma(df)
 
     # Gráficos avançados
-    # grafico_dispersao(df)
+    grafico_dispersao(populares)
     grafico_boxplot(populares)
     # grafico_heatmap(df)
-    # grafico_pairplot(df)
+    # grafico_pairplot(populares)
     # grafico_violin(df)
     # grafico_barras_empilhadas(df)
 
